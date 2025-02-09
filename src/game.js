@@ -1,25 +1,36 @@
-"use strict";
 console.log("Pet Spoon Game Loaded!");
 //get html elements
-const button = document.getElementById('feed');
-const pizzaButton = document.getElementById('pizza');
-const donutButton = document.getElementById('donut');
-const info = document.getElementById('info');
-const container = document.getElementById('container');
-const died = document.getElementById('died');
-const feedDiv = document.getElementById('feedwhat');
+var button = document.getElementById('feed');
+var pizzaButton = document.getElementById('pizza');
+var donutButton = document.getElementById('donut');
+var info = document.getElementById('info');
+var container = document.getElementById('container');
+var diedcontainer = document.getElementById('diedcontainer');
+var feedDiv = document.getElementById('feedwhat');
+var playAgainButton = document.getElementById('again');
 button.addEventListener('click', showFeedOptions);
+//Play again
+playAgainButton.addEventListener('click', playAgain);
+function playAgain() {
+    health = 100;
+    hunger = 100;
+    localStorage.setItem("health", health.toString());
+    localStorage.setItem("hunger", hunger.toString());
+    diedcontainer.style.display = 'none';
+    container.style.display = 'block';
+    updateInfo();
+}
 //info
-let health = Number(localStorage.getItem("health")) || 100;
-let hunger = Number(localStorage.getItem("hunger")) || 100;
+var health = Number(localStorage.getItem("health")) || 100;
+var hunger = Number(localStorage.getItem("hunger")) || 100;
 function updateInfo() {
     if (hunger <= 0) {
         if (health <= 0) {
             if (container) {
                 container.style.display = 'none';
             }
-            if (died) {
-                died.style.display = 'block';
+            if (diedcontainer) {
+                diedcontainer.style.display = 'block';
             }
         }
         health--;
@@ -28,14 +39,22 @@ function updateInfo() {
         hunger--;
     }
     if (info) {
-        info.innerText = `Health: ${health} | Hunger: ${hunger}`;
+        info.innerText = "Health: ".concat(health, " | Hunger: ").concat(hunger);
     }
     localStorage.setItem("health", health.toString());
     localStorage.setItem("hunger", hunger.toString());
 }
 function loadInfo() {
     if (info) {
-        info.innerText = `Health: ${health} | Hunger: ${hunger}`;
+        info.innerText = "Health: ".concat(health, " | Hunger: ").concat(hunger);
+        if (health <= 0) {
+            if (container) {
+                container.style.display = 'none';
+            }
+            if (diedcontainer) {
+                diedcontainer.style.display = 'block';
+            }
+        }
     }
 }
 //feeding stuff
@@ -78,6 +97,6 @@ function feedDonut() {
 loadInfo();
 pizzaButton.addEventListener('click', feedPizza);
 donutButton.addEventListener('click', feedDonut);
-setInterval(() => {
+setInterval(function () {
     updateInfo();
 }, 10000);

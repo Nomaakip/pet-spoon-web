@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Spoon Game</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            border: none;
+            border-radius: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,8 +27,14 @@
             <button id="donut">Donut</button>
         </div>
     </div>
-    <h1 id="died">Pet Spoon Died</h1>
-    <script type="module" src="dist/game.js"></script>
+
+    <div id="diedcontainer">
+        <h1 id="died">Pet Spoon Died</h1>
+        <br>
+        <button id="again">Play again</button>
+    </div>
+
+    <script type="module" src="src/game.js"></script>
 </body>
 
 </html>
