@@ -5,32 +5,36 @@
     font-family: "Poppins", serif;
   font-weight: 400;
   font-style: normal;
+  animation: popIn .5s ease-in-out;
 }
 
 body {
     background-color: #FFCCE5;
     margin: 0;
-    height: 300px;
+    height: 360px;
     width: 220px;
-    padding: 50px;
+    padding: 30px;
 
-    display: flex;
-    justify-content: center; /* Keeps items spread evenly */
-    align-items: center; /* Keeps them aligned without shifting layout */
+}
 
+#no {
+    display: none;
 }
 
 
 #diedcontainer {
     display: none;
+    animation: popIn .5s ease-in-out;
 }
 
 #feed {
-    margin-top: 5px;
+    animation: popIn .5s ease-in-out;
 }
 
 #feedwhat {
     display: none;
+    padding-top: 5px;
+    animation: popIn .5s ease-in-out;
 }
 
 button {
@@ -46,4 +50,17 @@ button {
 button:hover {
     box-shadow: 0px 0px 10px #ff3bb4;
     transform: scale(1.1);
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.auth-container {
+    display: block;
 }

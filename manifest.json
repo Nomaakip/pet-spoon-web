@@ -4,6 +4,6 @@
     "version": "1.0",
     "description": "A simple game in your browser.",
     "action": {
-      "default_popup": "index.html"
+      "default_popup": "spoon.html"
     }
   }
