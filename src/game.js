@@ -65,7 +65,7 @@ function updateInfo() {
         }
         health--;
     }
-    else {
+    if (hunger > 0) {
         hunger--;
     }
     if (info) {
@@ -93,6 +93,15 @@ function loadInfo() {
             }
         }
     }
+    pizzaButton.innerText = "Pizza (".concat(pizza, " left)");
+    donutButton.innerText = "Donut (".concat(donut, " left)");
+    localStorage.setItem("health", String(health));
+    localStorage.setItem("hunger", String(hunger));
+    localStorage.setItem("xp", String(xp));
+    localStorage.setItem("level", String(level));
+    localStorage.setItem("requiredXP", String(requiredXP));
+    localStorage.setItem("pizza", String(pizza));
+    localStorage.setItem("donut", String(donut));
 }
 button.addEventListener('click', showFeedOptions);
 function showFeedOptions() {
@@ -109,19 +118,19 @@ function feedPizza() {
     }
     else {
         pizza--;
+        if (hunger < 100) {
+            hunger += 20;
+            if (hunger >= 100)
+                hunger = 100;
+            giveXP(10);
+        }
+        if (health < 100) {
+            health += 10;
+            if (health >= 100)
+                health = 100;
+        }
+        updateInfo();
     }
-    if (hunger < 100) {
-        hunger += 20;
-        if (hunger > 100)
-            hunger = 100;
-        giveXP(10);
-    }
-    if (health < 100) {
-        health += 10;
-        if (health > 100)
-            health = 100;
-    }
-    updateInfo();
 }
 function feedDonut() {
     if (donut <= 0) {
@@ -129,20 +138,19 @@ function feedDonut() {
     }
     else {
         donut--;
-    }
-    if (hunger < 100) {
-        hunger += 10;
-        if (hunger > 100)
-            hunger = 100;
-        giveXP(5);
-    }
-    if (health < 100) {
-        health += 5;
-        if (health > 100)
-            health = 100;
+        if (hunger < 100) {
+            hunger += 10;
+            if (hunger >= 100)
+                hunger = 100;
+            giveXP(5);
+        }
+        if (health < 100) {
+            health += 5;
+            if (health >= 100)
+                health = 100;
+        }
         updateInfo();
     }
-    updateInfo();
 }
 loadInfo();
 pizzaButton.addEventListener('click', feedPizza);
@@ -169,4 +177,3 @@ function givePizza(amount) {
 }
 setInterval(function () { return giveDonut(1); }, 50000);
 setInterval(function () { return givePizza(1); }, 100000);
-updateInfo();

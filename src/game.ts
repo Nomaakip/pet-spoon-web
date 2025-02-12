@@ -62,7 +62,7 @@ function updateInfo(): void {
             }
         }
         health--;
-    } else {
+    } if (hunger > 0) {
         hunger--;
     }
 
@@ -94,6 +94,16 @@ function loadInfo(): void {
             }
         }
     }
+    pizzaButton.innerText = `Pizza (${pizza} left)`;
+    donutButton.innerText = `Donut (${donut} left)`;
+
+    localStorage.setItem("health", String(health));
+    localStorage.setItem("hunger", String(hunger));
+    localStorage.setItem("xp", String(xp));
+    localStorage.setItem("level", String(level));
+    localStorage.setItem("requiredXP", String(requiredXP));
+    localStorage.setItem("pizza", String(pizza));
+    localStorage.setItem("donut", String(donut));
 }
 
 
@@ -114,19 +124,19 @@ function feedPizza(): void {
 
     else {
         pizza--;
+        if (hunger < 100) {
+            hunger += 20;
+            if (hunger >= 100) hunger = 100;
+            giveXP(10);
+        }
+    
+        if (health < 100) {
+            health += 10;
+            if (health >= 100) health = 100;
+        }
+        updateInfo();
     }
 
-    if (hunger < 100) {
-        hunger += 20;
-        if (hunger > 100) hunger = 100;
-        giveXP(10);
-    }
-
-    if (health < 100) {
-        health += 10;
-        if (health > 100) health = 100;
-    }
-    updateInfo();
 }
 
 function feedDonut(): void {
@@ -136,21 +146,18 @@ function feedDonut(): void {
 
     else {
         donut--;
-    }
-
-    if (hunger < 100) {
-        hunger += 10;
-        if (hunger > 100) hunger = 100;
-        giveXP(5);
-    }
-
-    if (health < 100) {
-        health += 5;
-        if (health > 100) health = 100;
+        if (hunger < 100) {
+            hunger += 10;
+            if (hunger >= 100) hunger = 100;
+            giveXP(5);
+        }
+    
+        if (health < 100) {
+            health += 5;
+            if (health >= 100) health = 100;
+        }
         updateInfo();
     }
-
-    updateInfo();
 }
 
 loadInfo();
@@ -189,6 +196,3 @@ function givePizza(amount: number): void {
 
 setInterval(() => giveDonut(1), 50000); 
 setInterval(() => givePizza(1), 100000); 
-
-
-updateInfo();
